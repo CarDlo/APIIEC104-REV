@@ -1,5 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity} from "typeorm"
-
+import {Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, OneToMany} from "typeorm"
+import { Registro } from "./Registro";
 @Entity()
 export class Equipo extends BaseEntity{
 
@@ -7,7 +7,7 @@ export class Equipo extends BaseEntity{
     id: number;
 
     @Column()
-    nombre: string;
+    inversor: string;
 
     @Column()
     panel: string;
@@ -19,10 +19,10 @@ export class Equipo extends BaseEntity{
     descripcion: string;
 
     @Column()
-    IOA: number;
+    direccion: number;
 
     @Column()
-    tipo: string;
+    tipo_objeto: string;
 
     @Column()
     min: number;
@@ -31,12 +31,21 @@ export class Equipo extends BaseEntity{
     max: number;
 
     @Column()
-    factor: number;
+    unidad: string;
+
+    @Column({nullable: true})
+    f_conv: number;
 
     @Column()
-    codIEC104: number;
+    enviado: string; 
 
     @Column()
+    iec_870_5_104: number;
+
+    @OneToMany(() => Registro, (registro) => registro.equipo)
+    registros: Registro[];
+
+    @Column({default: 0})
     desplazamiento: number;
 
     @CreateDateColumn()
