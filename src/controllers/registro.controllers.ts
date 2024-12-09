@@ -16,3 +16,29 @@ export const createRegistro = async (req: any, res: any) => {
         }
     }
 };
+
+export const getRegistros = async (req: any, res: any) => {
+    try {
+        const registros = await Registro.find();
+        return res.json(registros); 
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }    
+    }
+};
+
+export const showRegistros = async (req: any, res: any) => {
+    try {
+        const { id } = req.params;
+        const registro = await Registro.findOneBy({ id: Number(id) });
+        if (!registro) {
+            return res.status(404).json({ message: "Registro no encontrado" });
+        }
+        return res.json(registro);
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+};
