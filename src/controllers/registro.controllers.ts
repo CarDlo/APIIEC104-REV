@@ -5,7 +5,7 @@ export const createRegistro = async (req: any, res: any) => {
     try {
         const { equipo_iec_870_5_104, value, direccion } = req.body;
         const registro = new Registro();
-        registro.equipo = equipo_iec_870_5_104;
+        registro.equipo_iec_870_5_104 = equipo_iec_870_5_104;
         registro.value = value;
         registro.direccion = direccion;
         await registro.save();

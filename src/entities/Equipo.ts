@@ -42,9 +42,6 @@ export class Equipo extends BaseEntity{
     @Column()
     iec_870_5_104: number;
 
-    @OneToMany(() => Registro, (registro) => registro.equipo)
-    registros: Registro[];
-
     @Column({default: 0})
     desplazamiento: number;
 
