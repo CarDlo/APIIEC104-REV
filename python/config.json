@@ -1,0 +1,30 @@
+[
+    {
+        "inversor": "INVERSOR-1.1.12",
+        "panel": "SKID 1.1",
+        "equipo": "INV 1.1.12",
+        "descripcion": "SKID 1.1 - Tensi\u00f3n de l\u00ednea AB inversor 12",
+        "direccion": 32066,
+        "tipo_objeto": "M_ME_NC_1 (13)",
+        "min": 0,
+        "max": 65535,
+        "unidad": "V",
+        "f_conv": 10,
+        "enviado": "x",
+        "iec_870_5_104": 1342
+    },
+    {
+        "inversor": "INVERSOR-1.1.12",
+        "panel": "SKID 1.1",
+        "equipo": "INV 1.1.12",
+        "descripcion": "SKID 1.1 - Tensi\u00f3n de l\u00ednea BC inversor 12",
+        "direccion": 32067,
+        "tipo_objeto": "M_ME_NC_1 (13)",
+        "min": 0,
+        "max": 65535,
+        "unidad": "V",
+        "f_conv": 10,
+        "enviado": "x",
+        "iec_870_5_104": 1343
+    }
+]
