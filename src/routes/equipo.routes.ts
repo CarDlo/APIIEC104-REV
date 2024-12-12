@@ -13,4 +13,5 @@ router.delete("/equipos/:id", deleteEquipo);
 
 router.get("/equipos/:id", showEquipo);
 
+
 export default router;
