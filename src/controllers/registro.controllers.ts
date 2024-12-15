@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
-import { Between, Like, Raw } from "typeorm";
+import { Between, Like, Raw, MoreThanOrEqual, LessThanOrEqual } from "typeorm";
+
 import { Registro } from "../entities/Registro";
 
 export const createRegistro = async (req: any, res: any) => {
@@ -18,9 +19,41 @@ export const createRegistro = async (req: any, res: any) => {
     }
 };
 
-export const getRegistros = async (req: any, res: any) => {
+export const getRegistros = async (req: Request, res: Response) => {
     try {
-        const registros = await Registro.find();
+        const { equipo_iec_870_5_104, direccion, value, fechaInicio, fechaFin } = req.query;
+
+        const whereConditions: any = {};
+
+        // Filtrar por 'equipo_iec_870_5_104' si existe en el query
+        if (equipo_iec_870_5_104) {
+            whereConditions.equipo_iec_870_5_104 = Number(equipo_iec_870_5_104);
+        }
+
+        // Filtrar por 'direccion' si existe en el query
+        if (direccion) {
+            whereConditions.direccion = Number(direccion);
+        }
+
+        // Filtrar por 'value' si existe en el query
+        if (value) {
+            whereConditions.value = Number(value);
+        }
+
+        // Filtrar por rango de fechas 'createdAt'
+        if (fechaInicio && fechaFin) {
+            whereConditions.createdAt = Between(new Date(fechaInicio), new Date(fechaFin));
+        } else if (fechaInicio) {
+            whereConditions.createdAt = MoreThanOrEqual(new Date(fechaInicio));
+        } else if (fechaFin) {
+            whereConditions.createdAt = LessThanOrEqual(new Date(fechaFin));
+        }
+
+        const registros = await Registro.find({
+            where: whereConditions,
+            order: { createdAt: 'DESC' } // Ordenar por fecha de creación (opcional)
+        });
+
         return res.json(registros); 
     } catch (error) {
         if (error instanceof Error) {
@@ -28,7 +61,6 @@ export const getRegistros = async (req: any, res: any) => {
         }    
     }
 };
-
 export const showRegistros = async (req: any, res: any) => {
     try {
         const { id } = req.params;

@@ -1,5 +1,5 @@
 import {Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne, JoinColumn} from "typeorm"
-import { Equipo } from "./Equipo";
+
 
 @Entity()
 export class Registro extends BaseEntity {
