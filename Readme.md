@@ -138,11 +138,9 @@ Existen dos formas de activar el servidor de Python:
      python client_iec104.py
      ```
 
-Con esta guía, su proyecto estará listo para ejecutarse. ¡Disfrúte trabajando en él! 🚀
-```
+Con esta guía, su proyecto estará listo para ejecutarse.
 
-
-# Documentación del Endpoint `filterRegistros`
+# Endpoint `filterRegistros`
 
 Este endpoint permite filtrar registros almacenados en la base de datos según criterios personalizados. El cliente puede buscar en una columna específica y aplicar un rango de fechas.
 
