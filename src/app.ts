@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import equipoRoutes from "./routes/equipo.routes";
 import registroRoutes from "./routes/registro.routes";
-
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 
@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.use(equipoRoutes);
 app.use(registroRoutes);
+app.use('/auth', authRoutes);
 
 
 export default app

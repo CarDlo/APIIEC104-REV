@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createRegistro, getRegistros, showRegistros, filterRegistros } from "../controllers/registro.controllers";
 import { runPythonScript } from '../services/pythonService';
+import { isAuthenticated } from '../middleware/auth.middleware';
 
 const router = Router();
 

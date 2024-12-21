@@ -2,7 +2,8 @@ import {Request, Response} from "express";
 import { Between, Like, Raw } from "typeorm";
 import { Registro } from "../entities/Registro";
 
-export const createRegistro = async (req: any, res: any) => {
+
+export const createRegistro = async (req: Request, res: Response) => {
     try {
         const { equipo_iec_870_5_104, value, direccion } = req.body;
         const registro = new Registro();
@@ -10,10 +11,10 @@ export const createRegistro = async (req: any, res: any) => {
         registro.value = value;
         registro.direccion = direccion;
         await registro.save();
-        return res.json(registro);
+        res.json(registro);
     } catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({ message: error.message });
+            res.status(500).json({ message: error.message });
         }
     }
 };
