@@ -16,7 +16,7 @@ def handle_plant(plant):
 
     if protocolo == "IEC104":
         print(f"Iniciando cliente IEC104 para la planta: {plant['name']}")
-        #start_iec104_client(ip, port, api_url)
+        start_iec104_client(ip, port, api_url)
     elif protocolo == "MODBUS":
         print(f"Iniciando cliente MODBUS para la planta: {plant['name']}")
 

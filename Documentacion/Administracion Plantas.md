@@ -114,9 +114,20 @@ Content-Type: application/json
   "puerto": 502,
   "apiUrl": "http://localhost/api/nueva_planta",
   "credenciales": {},
-  "metadata": {}
+  "metadata":  {
+    "start_address": 0,
+    "max_registers": 10,
+    "interval": 5
+  }
 }
 ```
+#### **Modbus configuracíon**
+En el campo `metadata` se debe agregar los valores de `start_address, max_registers, interval` en formato json, estos valores seran consultados por el cliente de modbus para configuracíon, si estos campos no se agregan se tomara por defecto `start_address: 0, max_registers: 10, interval: 5`.
+ 
+  - **start_address**: dirección inicial de lectura en el dispositivo modbus.
+  - **max_registers**: cantidad máxima de registros a leer desde la dirección inicial.
+  - **interval**: intervalo en segundos entre lecturas consecutivas.
+
 
 #### **Nota importante**
 - El campo `protocoloComunicacion` solo acepta los valores:
@@ -240,5 +251,6 @@ A continuación, se detalla el propósito de cada columna en la tabla `plants`:
 - **apiUrl**: URL del API asociado a la planta. Permite acceder a datos específicos o gestionar la planta de manera remota.
 - **credenciales**: Información de autenticación requerida para acceder al SCADA o API de la planta (si aplica). Generalmente contiene un objeto con claves como `username` y `password`.
 - **metadata**: Información adicional o personalizada relacionada con la planta, en formato JSON. Se utiliza para almacenar detalles específicos que no están cubiertos por otras columnas. Para el caso de modbus se requiere informacion de valores start_address: Dirección inicial de lectura, max_registers: Cantidad máxima de registros a leer e interval: Intervalo en segundos entre lecturas. Para modbus El programa usará los valores por defecto: start_address = 0, max_registers = 10, interval = 5.
+- **active**: Columna de tipo boolean para identificar si la planta se encuentra activa(true) o inactiva(false), si el valor es (true) el cliente ejecutara la captura de datos.
 
 ---
