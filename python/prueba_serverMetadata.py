@@ -32,7 +32,7 @@ def parse_signal_type(type_str):
 
 def main():
     # Carga las señales desde el archivo JSON
-    signals = load_signals_from_json('./python/config.json')
+    signals = load_signals_from_json('./config.json')
 
     # Configuración del servidor
     server = c104.Server(tick_rate_ms=1000, select_timeout_ms=1000)

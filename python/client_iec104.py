@@ -4,6 +4,7 @@ import c104
 import requests
 import logging
 
+
 # Configuración del archivo de registro
 LOG_FILE = "api_errors.log"
 logging.basicConfig(filename=LOG_FILE, level=logging.ERROR, format='%(asctime)s - %(message)s')
