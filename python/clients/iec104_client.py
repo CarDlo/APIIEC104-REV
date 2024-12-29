@@ -9,7 +9,7 @@ LOG_FILE = "iec104_client.log"
 logging.basicConfig(filename=LOG_FILE, level=logging.ERROR, format='%(asctime)s - %(message)s')
 
 
-def start_iec104_client(ip, port, api_url):
+def start_iec104_client(ip, port, api_url, tick_rate_ms, command_timeout_ms, time_sender_sleep_s, originator_address, time_connect_s):
 
     print("Iniciando cliente IEC104...")
     """
@@ -37,8 +37,8 @@ def start_iec104_client(ip, port, api_url):
             logging.error(f"Error connecting to API: {e}, Data: {data}")
 
     # Configuración del cliente IEC 104
-    my_client = c104.Client(tick_rate_ms=5000, command_timeout_ms=5000)
-    my_client.originator_address = 123
+    my_client = c104.Client(tick_rate_ms=tick_rate_ms, command_timeout_ms=command_timeout_ms)
+    my_client.originator_address = originator_address
 
     try:
         cl_connection_1 = my_client.add_connection(ip=ip, port=port, init=c104.Init.ALL)
@@ -100,13 +100,13 @@ def start_iec104_client(ip, port, api_url):
     try:
         while not cl_connection_1.is_connected:
             print(f"IEC104] Waiting for connection to {ip}:{port}")
-            time.sleep(1)
+            time.sleep(time_connect_s) # Esperar time_connect_s segundo
 
         print(f"IEC104 client connected to {ip}:{port}")
 
         while cl_connection_1.is_connected:
             cl_dump()
-            time.sleep(3)
+            time.sleep(time_sender_sleep_s) # Esperar time_sender_sleep_s segundos para la siguiente lectura
 
     except KeyboardInterrupt:
         print("Stopping IEC104 client.")

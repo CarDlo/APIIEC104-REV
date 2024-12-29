@@ -21,14 +21,16 @@ PLANT_ENDPOINT = PLANT_HOST  # Cambia la URL según tu configuración
 
 def fetch_plants():
     """
-    Obtiene la lista de plantas desde el endpoint /plant.
+    Obtiene la lista de plantas activas desde el endpoint /plant.
     """
     try:
         response = requests.get(PLANT_ENDPOINT)
         if response.status_code == 200:
             plants = response.json()
             if plants:
-                return plants
+                # Filtrar solo las plantas activas
+                active_plants = [plant for plant in plants if plant.get('active') == True]
+                return active_plants
             else:
                 raise Exception("No se encontraron datos de plantas en el endpoint.")
         else:

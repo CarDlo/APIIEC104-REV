@@ -121,12 +121,55 @@ Content-Type: application/json
   }
 }
 ```
-#### **Modbus configuracíon**
-En el campo `metadata` se debe agregar los valores de `start_address, max_registers, interval` en formato json, estos valores seran consultados por el cliente de modbus para configuracíon, si estos campos no se agregan se tomara por defecto `start_address: 0, max_registers: 10, interval: 5`.
- 
-  - **start_address**: dirección inicial de lectura en el dispositivo modbus.
-  - **max_registers**: cantidad máxima de registros a leer desde la dirección inicial.
-  - **interval**: intervalo en segundos entre lecturas consecutivas.
+#### **Modbus Configuración**
+
+En el campo `metadata` se debe agregar los valores de `start_address`, `max_registers` e `interval` en formato JSON. Estos valores serán consultados por el cliente de Modbus para configuración. Si estos campos no se agregan, se tomarán por defecto los siguientes valores:
+
+- `start_address`: 0
+- `max_registers`: 10
+- `interval`: 5
+
+---
+
+### Descripción de los Campos:
+
+- **`start_address`**: Dirección inicial de lectura en el dispositivo Modbus.
+- **`max_registers`**: Cantidad máxima de registros a leer desde la dirección inicial.
+- **`interval`**: Intervalo en segundos entre lecturas consecutivas.
+
+#### **IEC 104 Configuración**
+
+En el campo `metadata` se debe agregar los valores de `tick_rate_ms`, `command_timeout_ms`, `time_sender_sleep_ms`, `time_connect_ms` y `originator_address` en formato JSON. Estos valores serán utilizados por el cliente IEC 104 para su configuración. Si estos campos no se agregan, se tomarán por defecto los siguientes valores:
+
+- `tick_rate_ms`: 5000
+- `command_timeout_ms`: 5000
+- `time_sender_sleep_ms`: 5000
+- `time_connect_ms`: 1000
+- `originator_address`: 123
+
+---
+
+### Descripción de los Campos:
+
+- **`tick_rate_ms`**: Especifica la frecuencia con la que el cliente IEC 104 procesa eventos internos, como la recepción de datos, el manejo de comandos, y las actualizaciones de puntos.
+- **`command_timeout_ms`**: Tiempo máximo en milisegundos para esperar una respuesta a un comando antes de considerar un error.
+- **`time_sender_sleep_ms`**: Introduce pausas explícitas en el bucle principal del programa para limitar con qué frecuencia este realiza ciertas acciones (como recorrer puntos y enviar datos). (frecuencia del bucle que procesa y envía los datos). Se recomienda que este valor sea igual a tick_rate_ms.
+- **`time_connect_ms`**: Tiempo en milisegundos que el cliente espera antes de intentar reconectarse si no está conectado.
+- **`originator_address`**: Identificador único del cliente dentro del sistema IEC 104.
+
+---
+
+### Ejemplo JSON para Configuración
+
+```json
+{
+  "tick_rate_ms": 5000,
+  "command_timeout_ms": 5000,
+  "time_sender_sleep_ms": 5000,
+  "time_connect_ms": 1000,
+  "originator_address": 123
+}
+```
 
 
 #### **Nota importante**
@@ -143,12 +186,18 @@ En el campo `metadata` se debe agregar los valores de `start_address, max_regist
   "country": "Colombia",
   "potenciaDC": 5.00,
   "scada": "Nuevo SCADA",
-  "protocoloComunicacion": "MODBUS",
+  "protocoloComunicacion": "IEC104",
   "ip": "localhost",
   "puerto": 502,
   "apiUrl": "http://localhost/api/nueva_planta",
   "credenciales": {},
-  "metadata": {}
+  "metadata": {
+    "tick_rate_ms": 5000,
+    "command_timeout_ms": 5000,
+    "time_sender_sleep_ms": 5000,
+    "time_connect_ms": 1000,
+    "originator_address": 123
+}
 }
 ```
 

@@ -11,18 +11,38 @@ def handle_plant(plant):
     ip = plant["ip"]
     port = int(plant["puerto"])
     api_url = plant["apiUrl"]
+    metadata = plant.get("metadata", {})
     print(f"Protocolo: {protocolo}, IP: {ip}, Puerto: {port}, URL de la API: {api_url}")
     
 
     if protocolo == "IEC104":
         print(f"Iniciando cliente IEC104 para la planta: {plant['name']}")
-        start_iec104_client(ip, port, api_url)
+
+        # Extraer valores de metadata
+
+        
+        if metadata is not None:
+            tick_rate_ms = metadata.get("tick_rate_ms", 5000)  # Valor por defecto: 5000
+            command_timeout_ms = metadata.get("command_timeout_ms", 5000)  # Valor por defecto: 5000
+            time_sender_sleep_ms = metadata.get("time_sender_sleep_ms", 5000)  # Valor por defecto: 5000
+            originator_address = metadata.get("originator_address", 123)  # Valor por defecto: 123
+        else:
+            tick_rate_ms = 5000
+            command_timeout_ms = 5000
+            time_sender_sleep_ms = 5000
+            time_sender_sleep_s = time_sender_sleep_ms/1000
+            time_connect_ms = 1000
+            time_connect_s = time_connect_ms/1000
+            originator_address = 123
+
+        # Llamar a la función start_iec104_client con los parámetros adecuados
+        start_iec104_client(ip, port, api_url, tick_rate_ms, command_timeout_ms, time_sender_sleep_s, originator_address, time_connect_s)
     elif protocolo == "MODBUS":
         print(f"Iniciando cliente MODBUS para la planta: {plant['name']}")
 
         # Extraer valores de metadata
         
-        metadata = plant.get("metadata", {})
+        
         if metadata is not None:
             start_address = metadata.get("start_address", 0)  # Valor por defecto: 0
             max_registers = metadata.get("max_registers", 10)  # Valor por defecto: 10
