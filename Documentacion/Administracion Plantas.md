@@ -121,6 +121,8 @@ Content-Type: application/json
   }
 }
 ```
+---
+
 #### **Modbus Configuración**
 
 En el campo `metadata` se debe agregar los valores de `start_address`, `max_registers` e `interval` en formato JSON. Estos valores serán consultados por el cliente de Modbus para configuración. Si estos campos no se agregan, se tomarán por defecto los siguientes valores:
@@ -129,13 +131,14 @@ En el campo `metadata` se debe agregar los valores de `start_address`, `max_regi
 - `max_registers`: 10
 - `interval`: 5
 
----
 
 ### Descripción de los Campos:
 
 - **`start_address`**: Dirección inicial de lectura en el dispositivo Modbus.
 - **`max_registers`**: Cantidad máxima de registros a leer desde la dirección inicial.
 - **`interval`**: Intervalo en segundos entre lecturas consecutivas.
+
+---
 
 #### **IEC 104 Configuración**
 
@@ -147,7 +150,6 @@ En el campo `metadata` se debe agregar los valores de `tick_rate_ms`, `command_t
 - `time_connect_ms`: 1000
 - `originator_address`: 123
 
----
 
 ### Descripción de los Campos:
 
@@ -157,7 +159,6 @@ En el campo `metadata` se debe agregar los valores de `tick_rate_ms`, `command_t
 - **`time_connect_ms`**: Tiempo en milisegundos que el cliente espera antes de intentar reconectarse si no está conectado.
 - **`originator_address`**: Identificador único del cliente dentro del sistema IEC 104.
 
----
 
 ### Ejemplo JSON para Configuración
 
@@ -170,7 +171,7 @@ En el campo `metadata` se debe agregar los valores de `tick_rate_ms`, `command_t
   "originator_address": 123
 }
 ```
-
+---
 
 #### **Nota importante**
 - El campo `protocoloComunicacion` solo acepta los valores:
@@ -299,7 +300,8 @@ A continuación, se detalla el propósito de cada columna en la tabla `plants`:
 - **puerto**: Puerto de comunicación asociado al protocolo usado por la planta. Define el punto de acceso para las conexiones.
 - **apiUrl**: URL del API asociado a la planta. Permite acceder a datos específicos o gestionar la planta de manera remota.
 - **credenciales**: Información de autenticación requerida para acceder al SCADA o API de la planta (si aplica). Generalmente contiene un objeto con claves como `username` y `password`.
-- **metadata**: Información adicional o personalizada relacionada con la planta, en formato JSON. Se utiliza para almacenar detalles específicos que no están cubiertos por otras columnas. Para el caso de modbus se requiere informacion de valores start_address: Dirección inicial de lectura, max_registers: Cantidad máxima de registros a leer e interval: Intervalo en segundos entre lecturas. Para modbus El programa usará los valores por defecto: start_address = 0, max_registers = 10, interval = 5.
+- **metadata**: Información adicional o personalizada relacionada con la planta, en formato JSON. Se utiliza para almacenar detalles específicos que no están cubiertos por otras columnas. Para el caso de modbus se requiere informacion de valores `start_address`: Dirección inicial de lectura, `max_registers`: Cantidad máxima de registros a leer e `interval`: Intervalo en segundos entre lecturas. Para modbus El programa usará los valores por defecto: `start_address = 0, max_registers = 10, interval = 5`. Para el protocolo IEC104 
+el campo metadata se debe agregar los valores de `tick_rate_ms, command_timeout_ms, time_sender_sleep_ms, time_connect_ms y originator_address` en formato JSON. Estos valores serán utilizados por el cliente IEC 104 para su configuración. Si estos campos no se agregan, se tomarán por defecto los siguientes valores `tick_rate_ms: 5000, command_timeout_ms: 5000, time_sender_sleep_ms: 5000, time_connect_ms: 1000, originator_address: 123`.
 - **active**: Columna de tipo boolean para identificar si la planta se encuentra activa(true) o inactiva(false), si el valor es (true) el cliente ejecutara la captura de datos.
 
 ---

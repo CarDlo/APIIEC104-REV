@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon",
     "build": "tsc",
     "clean": "rm -rf dist node_modules/.cache node_modules && npx tsc --build --clean",
     "start": "node dist/index.js"

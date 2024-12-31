@@ -1,0 +1,7 @@
+{
+    "watch": ["src"],
+    "ignore": ["python", "logs", "*.py", "*.pyc"],
+    "ext": "ts",
+    "exec": "ts-node src/index.ts"
+  }
+  

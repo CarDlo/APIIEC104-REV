@@ -35,7 +35,7 @@ def start_modbus_client(ip, port, start_address, max_registers, interval, api_ur
         }
         try:
             response = requests.post(api_url, json=data)
-            if response.status_code == 200:
+            if response.status_code in [200, 201]:
                 logging.info(f"Datos enviados a la API: {response.json()}")
             else:
                 logging.error(f"Modbus Client: Error al enviar datos a la API: {api_url}, IP: {ip}, Código: {response.status_code}, Respuesta: {response.text}")

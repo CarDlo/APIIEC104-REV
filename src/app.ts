@@ -7,6 +7,7 @@ import registroRoutes from "./routes/registro.routes";
 import authRoutes from './routes/auth.routes';
 import dataRoutes from './routes/data.routes';
 import plantRoutes from './routes/plant.routes'
+import clientRoutes from './routes/client.routes'
 
 const app = express();
 
@@ -20,6 +21,6 @@ app.use(registroRoutes);
 app.use('/api', dataRoutes);
 app.use('/auth', authRoutes);
 app.use('/plants', plantRoutes);
-
+app.use("/client", clientRoutes);
 
 export default app
