@@ -8096,3 +8096,9 @@
 2024-12-29 21:58:38,903 - Modbus Client: Error al enviar datos a la API: http://localhost:3000/api/Bayunca1, IP: 127.0.0.1, Código: 201, Respuesta: {"message":"Registro creado exitosamente en la planta Bayunca1","data":{"REG_CA":9,"value":1000,"direccion":null,"metadata":null,"id":6602,"createdAt":"2024-12-30T02:58:38.901Z","updatedAt":"2024-12-30T02:58:38.901Z"}}
 2024-12-29 21:58:47,971 - Error conectando a la API: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/Bayunca1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000186ECC6A8D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
 2024-12-30 07:47:01,515 - Error conectando al endpoint: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /plants (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002ECD2957DA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-12-31 06:42:38,727 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 06:42:38,732 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
+2024-12-31 06:44:46,150 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 06:44:46,150 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
+2024-12-31 06:48:35,356 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 06:48:35,356 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
