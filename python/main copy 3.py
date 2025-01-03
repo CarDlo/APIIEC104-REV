@@ -14,57 +14,29 @@ PROCESS_STATE_FILE = "process_state.json"
 # Diccionario global para rastrear procesos
 processes = {}
 
-def check_file_permissions(file_path):
-    """Verifica los permisos de lectura y escritura de un archivo."""
-    if not os.path.exists(file_path):
-        print(f"El archivo {file_path} no existe.")
-        return False
-    if not os.access(file_path, os.R_OK):
-        print(f"No tienes permisos de lectura en {file_path}")
-        return False
-    if not os.access(file_path, os.W_OK):
-        print(f"No tienes permisos de escritura en {file_path}")
-        return False
-    print(f"Tienes permisos de lectura y escritura en {file_path}")
-    return True
-
 def load_active_plants():
     """Carga las plantas activas desde el archivo de bloqueo."""
-    if not check_file_permissions(LOCK_FILE):
-        return set()
     if os.path.exists(LOCK_FILE):
         with open(LOCK_FILE, "r") as f:
-            active_plants = set(json.load(f))
-            print(f"Loaded active plants: {active_plants}")
-            return active_plants
+            return set(json.load(f))
     return set()
 
 def save_active_plants(active_plants):
     """Guarda las plantas activas en el archivo de bloqueo."""
-    if not check_file_permissions(LOCK_FILE):
-        return
     with open(LOCK_FILE, "w") as f:
         json.dump(list(active_plants), f)
-        print(f"Saved active plants: {active_plants}")
 
 def load_process_state():
     """Carga el estado de los procesos desde el archivo."""
-    if not check_file_permissions(PROCESS_STATE_FILE):
-        return {}
     if os.path.exists(PROCESS_STATE_FILE):
         with open(PROCESS_STATE_FILE, "r") as f:
-            process_state = json.load(f)
-            print(f"Loaded process state: {process_state}")
-            return process_state
+            return json.load(f)
     return {}
 
 def save_process_state(state):
     """Guarda el estado de los procesos en el archivo."""
-    if not check_file_permissions(PROCESS_STATE_FILE):
-        return
     with open(PROCESS_STATE_FILE, "w") as f:
         json.dump(state, f)
-        print(f"Saved process state: {state}")
 
 def handle_plant(plant):
     """
@@ -124,8 +96,6 @@ def start_client(plant_name):
     active_plants = load_active_plants()
     process_state = load_process_state()
 
-    print(f"Estado de los procesos: {process_state}")
-
     if plant_name in process_state:
         return {"status": "error", "message": f"La planta {plant_name} ya está en ejecución."}
 
@@ -167,7 +137,7 @@ def stop_client(plant_name):
 
     if plant_name in active_plants:
         active_plants.remove(plant_name)
-    save_active_plants(active_plants)
+        save_active_plants(active_plants)
 
     return {"status": "success", "message": f"Cliente para {plant_name} detenido correctamente."}
 
@@ -225,30 +195,8 @@ def restart_all_clients():
 
     return {"status": "success", "data": {"stopped": stop_results, "started": start_results}}
 
-def cleanup_orphan_processes():
-    """
-    Limpia los procesos huérfanos que ya no están activos.
-    """
-    process_state = load_process_state()
-    active_plants = load_active_plants()
-    updated_process_state = {}
-
-    for plant_name, pid in process_state.items():
-        if not os.path.exists(f"/proc/{pid}"):
-            print(f"Proceso huérfano encontrado: {plant_name} con PID {pid}. Limpiando...")
-            if plant_name in active_plants:
-                active_plants.remove(plant_name)
-        else:
-            updated_process_state[plant_name] = pid
-
-    save_process_state(updated_process_state)
-    save_active_plants(active_plants)
-
 if __name__ == "__main__":
     import sys
-
-    # Ejecutar limpieza de procesos huérfanos al inicio
-    cleanup_orphan_processes()
 
     if len(sys.argv) < 2:
         print(json.dumps({"status": "error", "message": "Uso: main.py [start|stop|restart|status|start-all|stop-all|restart-all] [plant_name]"}))

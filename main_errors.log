@@ -2919,3 +2919,13 @@
 2024-12-30 07:25:53,931 - Failed to send data to API. Status code: 201, Response: {"message":"Registro creado exitosamente en la planta Lavilla","data":{"REG_CA":1028,"value":5.079931259155273,"direccion":32008,"metadata":null,"id":324,"createdAt":"2024-12-30T12:25:53.930Z","updatedAt":"2024-12-30T12:25:53.930Z"}}, Data: {'direccion': 32008, 'value': 5.079931259155273, 'REG_CA': 1028}
 2024-12-30 07:25:53,936 - Failed to send data to API. Status code: 201, Response: {"message":"Registro creado exitosamente en la planta Lavilla","data":{"REG_CA":1029,"value":94.04702758789062,"direccion":32009,"metadata":null,"id":325,"createdAt":"2024-12-30T12:25:53.934Z","updatedAt":"2024-12-30T12:25:53.934Z"}}, Data: {'direccion': 32009, 'value': 94.04702758789062, 'REG_CA': 1029}
 2024-12-30 07:25:53,941 - Failed to send data to API. Status code: 201, Response: {"message":"Registro creado exitosamente en la planta Lavilla","data":{"REG_CA":1030,"value":87.322998046875,"direccion":32010,"metadata":null,"id":326,"createdAt":"2024-12-30T12:25:53.939Z","updatedAt":"2024-12-30T12:25:53.939Z"}}, Data: {'direccion': 32010, 'value': 87.322998046875, 'REG_CA': 1030}
+2024-12-31 07:12:57,248 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 07:12:57,248 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
+2024-12-31 07:13:41,344 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 07:13:41,344 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
+2024-12-31 07:42:11,540 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 07:42:11,540 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
+2024-12-31 07:43:12,657 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 07:43:12,658 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502
+2024-12-31 07:44:06,046 - Connection to (127.0.0.1, 502) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2024-12-31 07:44:06,047 - No se pudo conectar al dispositivo Modbus en 127.0.0.1:502

@@ -37,7 +37,8 @@ Host: localhost:3000
     "puerto": 502,
     "apiUrl": "http://localhost/api/bayunca1",
     "credenciales": null,
-    "metadata": null
+    "metadata": null,
+    "active": true
   },
   {
     "id": 2,
@@ -51,7 +52,8 @@ Host: localhost:3000
     "puerto": 2404,
     "apiUrl": "http://localhost/api/lavilla",
     "credenciales": null,
-    "metadata": null
+    "metadata": null,
+    "active": true
   }
 ]
 ```
@@ -83,7 +85,8 @@ Host: localhost:3000
   "puerto": 502,
   "apiUrl": "http://localhost/api/bayunca1",
   "credenciales": null,
-  "metadata": null
+  "metadata": null,
+  "active": true
 }
 ```
 
@@ -118,7 +121,8 @@ Content-Type: application/json
     "start_address": 0,
     "max_registers": 10,
     "interval": 5
-  }
+  },
+  "active": true
 }
 ```
 ---
@@ -198,7 +202,8 @@ En el campo `metadata` se debe agregar los valores de `tick_rate_ms`, `command_t
     "time_sender_sleep_ms": 5000,
     "time_connect_ms": 1000,
     "originator_address": 123
-}
+},
+  "active": true
 }
 ```
 
@@ -229,7 +234,8 @@ Content-Type: application/json
   "puerto": 2404,
   "apiUrl": "http://localhost/api/planta_actualizada",
   "credenciales": {},
-  "metadata": {}
+  "metadata": {},
+  "active": true
 }
 ```
 
@@ -290,7 +296,7 @@ Host: localhost:3000
 A continuación, se detalla el propósito de cada columna en la tabla `plants`:
 
 - **id**: Identificador único de cada planta. Se utiliza para referenciar la planta en operaciones como consultas, actualizaciones o eliminaciones.
-- **name**: Nombre de la planta fotovoltaica. Permite identificarla de manera descriptiva.
+- **name**: Nombre de la planta fotovoltaica. Permite identificarla de manera descriptiva, se recomienda un nombre sin espacios.
 - **province**: Provincia o región donde está ubicada la planta. Proporciona información geográfica detallada.
 - **country**: País donde se encuentra la planta. Facilita clasificar las plantas por ubicación nacional.
 - **potenciaDC**: Potencia en corriente directa (DC) de la planta en megavatios (MW). Representa la capacidad energética instalada.

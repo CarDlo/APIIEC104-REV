@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes';
 import dataRoutes from './routes/data.routes';
 import plantRoutes from './routes/plant.routes'
 import clientRoutes from './routes/client.routes'
+import statusRoutes from './routes/status.routes'
 
 const app = express();
 
@@ -22,5 +23,5 @@ app.use('/api', dataRoutes);
 app.use('/auth', authRoutes);
 app.use('/plants', plantRoutes);
 app.use("/client", clientRoutes);
-
+app.use("/status", statusRoutes);
 export default app

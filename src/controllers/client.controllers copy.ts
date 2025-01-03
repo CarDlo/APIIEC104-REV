@@ -2,23 +2,11 @@
 import { Request, Response } from 'express';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import path from 'path';
-import fs from 'fs';
+
 // Rutas al entorno virtual y al archivo main.py
 const PYTHON_SCRIPT_PATH = path.resolve(__dirname, '../../python/main.py'); // Ajuste a la carpeta raíz
 const VENV_PATH_WINDOWS = path.resolve(__dirname, '../../python/venv/Scripts/python.exe'); // Ajuste a la carpeta raíz
 const VENV_PATH_UNIX = path.resolve(__dirname, '../../python/venv/bin/python'); // Ajuste a la carpeta raíz
-
-// Verificar permisos de archivo
-const checkFilePermissions = (filePath: string): boolean => {
-  try {
-    fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
-    console.log(`Tienes permisos de lectura y escritura en ${filePath}`);
-    return true;
-  } catch (err) {
-    console.error(`No tienes permisos de lectura y/o escritura en ${filePath}`);
-    return false;
-  }
-};
 
 // Función para ejecutar el script de Python
 const executePythonScript = (args: string[], res: Response): void => {
@@ -27,24 +15,14 @@ const executePythonScript = (args: string[], res: Response): void => {
 
   // Validar rutas antes de ejecutar el comando
   if (!pythonExecutable || !PYTHON_SCRIPT_PATH) {
-    res.status(500).json({ error: 'Python executable or script path is invalid.' });
+    res.status(500).send('Python executable or script path is invalid.');
     return;
   }
 
-  // Verificar permisos de los archivos necesarios
-  const lockFilePath = path.resolve(__dirname, '../../python/plants.lock');
-  const processStateFilePath = path.resolve(__dirname, '../../python/process_state.json');
-  
-  if (!checkFilePermissions(lockFilePath) || !checkFilePermissions(processStateFilePath)) {
-    res.status(500).json({ error: 'Insufficient file permissions.' });
-    return;
-  }
-  
+  const command: string = `${pythonExecutable} ${PYTHON_SCRIPT_PATH} ${args.join(' ')}`;
+  console.log('Executing command:', command);
 
-  console.log('Executing command:', pythonExecutable, args.join(' '));
-  const childProcess: ChildProcessWithoutNullStreams = spawn(pythonExecutable, [PYTHON_SCRIPT_PATH, ...args], {
-    shell: false,
-  });
+  const childProcess: ChildProcessWithoutNullStreams = spawn(command, { shell: true });
 
   let stdoutData = ''; // Acumular datos de stdout
   let stderrData = ''; // Acumular datos de stderr
@@ -66,22 +44,17 @@ const executePythonScript = (args: string[], res: Response): void => {
       responseSent = true;
       if (code === 0) {
         try {
-          // Busca la última línea que contenga JSON
-          const jsonMatch = stdoutData.trim().split('\n').find((line) => line.startsWith('{') && line.endsWith('}'));
-          if (jsonMatch) {
-            const jsonResponse = JSON.parse(jsonMatch);
-            res.status(200).json(jsonResponse);
-          } else {
-            res.status(200).send(stdoutData.trim());
-          }
-        } catch (err) {
-          console.error('Error parsing JSON:', err);
-          res.status(500).json({ error: 'Failed to parse JSON response.', raw: stdoutData.trim() });
+          // Intenta parsear stdout como JSON
+          const jsonResponse = JSON.parse(stdoutData);
+          res.status(200).json(jsonResponse);
+        } catch {
+          // Si no es JSON, envía como texto
+          res.status(200).send(stdoutData);
         }
       } else {
         res.status(500).json({
           error: `Process failed with exit code ${code}`,
-          stderr: stderrData.trim(),
+          stderr: stderrData,
         });
       }
     }
@@ -91,7 +64,7 @@ const executePythonScript = (args: string[], res: Response): void => {
     console.error(`Process error: ${error.message}`);
     if (!responseSent) {
       responseSent = true;
-      res.status(500).json({ error: `Process execution error: ${error.message}` });
+      res.status(500).json({ error: `Process failed: ${error.message}` });
     }
   });
 };
@@ -101,7 +74,7 @@ export const startPlant = (req: Request, res: Response): void => {
   const { plantName } = req.params;
 
   if (!plantName) {
-    res.status(400).json({ error: 'Plant name is required.' });
+    res.status(400).json({ error: 'Plant name is required' });
     return;
   }
 
@@ -113,7 +86,7 @@ export const stopPlant = (req: Request, res: Response): void => {
   const { plantName } = req.params;
 
   if (!plantName) {
-    res.status(400).json({ error: 'Plant name is required.' });
+    res.status(400).json({ error: 'Plant name is required' });
     return;
   }
 
@@ -125,7 +98,7 @@ export const restartPlant = (req: Request, res: Response): void => {
   const { plantName } = req.params;
 
   if (!plantName) {
-    res.status(400).json({ error: 'Plant name is required.' });
+    res.status(400).json({ error: 'Plant name is required' });
     return;
   }
 
